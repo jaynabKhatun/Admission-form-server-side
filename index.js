@@ -10,6 +10,8 @@ const corsOptions = {
   origin: [
     "https://admission-form-e7c91.firebaseapp.com",
     "https://admission-form-e7c91.web.app",
+    "https://comfy-horse-8af704.netlify.app",
+    " https://verdant-cajeta-12604a.netlify.app",
     "http://localhost:3000",
     "http://localhost:5174",
     "http://localhost:5173",
