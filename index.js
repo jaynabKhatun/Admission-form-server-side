@@ -6,8 +6,21 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
 
+const corsOptions = {
+  origin: [
+    "https://admission-form-e7c91.firebaseapp.com",
+    "https://admission-form-e7c91.web.app",
+    "http://localhost:3000",
+    "http://localhost:5174",
+    "http://localhost:5173",
+  ],
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
 // middleware
-app.use(cors());
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.uo3rphs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -31,14 +44,13 @@ async function run() {
       .db("admissionCandidate")
       .collection("candidates");
 
-      // post data to the database
+    // post data to the database
     app.post("/candidates", async (req, res) => {
       const candidates = req.body;
       console.log(candidates);
-      const result= await studentDataCollection.insertOne(candidates);
+      const result = await studentDataCollection.insertOne(candidates);
       res.send(result);
     });
-    
 
     //  get data from the database
 
@@ -46,7 +58,6 @@ async function run() {
       const candidates = await studentDataCollection.find().toArray();
       res.send(candidates);
     });
-
 
     await client.db("admin").command({ ping: 1 });
     console.log(
